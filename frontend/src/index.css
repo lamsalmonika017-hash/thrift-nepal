@@ -1,0 +1,83 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  * {
+    box-sizing: border-box;
+  }
+  html {
+    scroll-behavior: smooth;
+  }
+  body {
+    background-color: #0F0F0F;
+    color: #E8E8E8;
+    font-family: 'DM Sans', sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+  ::-webkit-scrollbar {
+    width: 6px;
+  }
+  ::-webkit-scrollbar-track {
+    background: #1A1A1A;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: #FF6B35;
+    border-radius: 3px;
+  }
+  ::selection {
+    background: #FF6B35;
+    color: #0F0F0F;
+  }
+}
+
+@layer components {
+  .btn-primary {
+    @apply bg-tn-orange hover:bg-tn-orange-dark text-white font-semibold px-6 py-3 rounded-xl transition-all duration-200 active:scale-95 font-body;
+  }
+  .btn-secondary {
+    @apply border border-tn-border hover:border-tn-orange bg-transparent text-tn-text font-semibold px-6 py-3 rounded-xl transition-all duration-200 font-body;
+  }
+  .card-glass {
+    @apply bg-tn-dark/80 backdrop-blur-md border border-tn-border rounded-2xl;
+  }
+  .input-field {
+    @apply w-full bg-tn-card border border-tn-border rounded-xl px-4 py-3 text-tn-text placeholder-tn-muted focus:outline-none focus:border-tn-orange transition-colors font-body;
+  }
+  .badge {
+    @apply inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium;
+  }
+  .skeleton {
+    @apply bg-gradient-to-r from-tn-card via-tn-border to-tn-card bg-[length:200%_100%] animate-shimmer rounded;
+  }
+  .section-title {
+    @apply font-display text-3xl md:text-4xl font-bold text-tn-text;
+  }
+  .product-card {
+    @apply bg-tn-dark border border-tn-border rounded-2xl overflow-hidden hover:border-tn-orange/50 transition-all duration-300 hover:-translate-y-1 hover:shadow-lg hover:shadow-tn-orange/10 cursor-pointer;
+  }
+  .tag {
+    @apply text-xs px-2.5 py-1 rounded-lg font-medium;
+  }
+}
+
+@layer utilities {
+  .text-gradient {
+    @apply bg-gradient-to-r from-tn-orange to-tn-beige bg-clip-text text-transparent;
+  }
+  .glow-orange {
+    box-shadow: 0 0 30px rgba(255, 107, 53, 0.3);
+  }
+  .noise-overlay {
+    position: relative;
+  }
+  .noise-overlay::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 1;
+  }
+}
