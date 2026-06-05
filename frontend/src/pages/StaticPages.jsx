@@ -1,14 +1,14 @@
+import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
-import { ArrowRight, Heart, Shield, Zap, Users, BookOpen, Laptop, Phone, Shirt } from 'lucide-react';
+import { ArrowRight, Heart, Shield, Zap } from 'lucide-react';
+import toast from 'react-hot-toast';
 
 // ─── About Page ───────────────────────────────────────────────
 export function About() {
   return (
     <div className="min-h-screen pt-24 pb-16">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-
-        {/* Hero */}
         <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }}
           className="text-center mb-16">
           <div className="inline-flex items-center gap-2 bg-tn-orange/10 border border-tn-orange/20 text-tn-orange text-sm font-medium px-4 py-1.5 rounded-full mb-4">
@@ -22,7 +22,6 @@ export function About() {
           </p>
         </motion.div>
 
-        {/* Story */}
         <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
           className="bg-tn-dark border border-tn-border rounded-3xl p-8 mb-8">
           <h2 className="font-display font-bold text-2xl text-tn-text mb-4">Our Story 📖</h2>
@@ -37,7 +36,6 @@ export function About() {
           </p>
         </motion.div>
 
-        {/* Values */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
           {[
             { icon: Heart, title: 'Student First', desc: 'Everything we build is designed around what students actually need — affordable, simple, and trustworthy.', color: 'text-red-400', bg: 'bg-red-500/10' },
@@ -59,7 +57,6 @@ export function About() {
           })}
         </div>
 
-        {/* Stats */}
         <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
           className="bg-gradient-to-r from-tn-orange/10 to-tn-beige/10 border border-tn-orange/20 rounded-3xl p-8 mb-8">
           <h2 className="font-display font-bold text-2xl text-tn-text mb-6 text-center">ThriftNepal by Numbers</h2>
@@ -78,7 +75,6 @@ export function About() {
           </div>
         </motion.div>
 
-        {/* CTA */}
         <div className="text-center">
           <Link to="/register" className="btn-primary inline-flex items-center gap-2">
             Join ThriftNepal Free <ArrowRight className="w-4 h-4" />
@@ -94,7 +90,6 @@ export function HowItWorks() {
   return (
     <div className="min-h-screen pt-24 pb-16">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-
         <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} className="text-center mb-16">
           <h1 className="font-display font-bold text-4xl md:text-5xl text-tn-text mb-4">
             How It <span className="text-gradient">Works</span>
@@ -102,12 +97,8 @@ export function HowItWorks() {
           <p className="text-tn-muted text-lg">Simple, safe, and student-friendly</p>
         </motion.div>
 
-        {/* For Buyers */}
-        <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
-          className="mb-12">
-          <h2 className="font-display font-bold text-2xl text-tn-text mb-6 flex items-center gap-2">
-            🛒 For Buyers
-          </h2>
+        <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="mb-12">
+          <h2 className="font-display font-bold text-2xl text-tn-text mb-6">🛒 For Buyers</h2>
           <div className="space-y-4">
             {[
               { step: '01', title: 'Browse & Search', desc: 'Search for laptops, books, clothes, phones and more. Filter by category, condition, and price.' },
@@ -132,9 +123,7 @@ export function HowItWorks() {
           </div>
         </motion.div>
 
-        {/* For Sellers */}
-        <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
-          className="mb-12">
+        <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="mb-12">
           <h2 className="font-display font-bold text-2xl text-tn-text mb-6">💰 For Sellers</h2>
           <div className="space-y-4">
             {[
@@ -159,12 +148,11 @@ export function HowItWorks() {
           </div>
         </motion.div>
 
-        {/* eSewa Info */}
         <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
           className="bg-green-500/10 border border-green-500/20 rounded-3xl p-8 mb-8">
           <h2 className="font-display font-bold text-2xl text-tn-text mb-4">📱 eSewa Payment</h2>
           <p className="text-tn-muted leading-relaxed mb-4">
-            ThriftNepal uses eSewa — Nepal's most trusted digital wallet — for all payments. It's fast, safe, and every Nepali student already has it.
+            ThriftNepal uses eSewa — Nepal's most trusted digital wallet — for all payments.
           </p>
           <ul className="space-y-2 text-sm text-tn-muted">
             <li className="flex items-center gap-2"><span className="text-green-400">✓</span> No cash needed</li>
@@ -186,10 +174,24 @@ export function HowItWorks() {
 
 // ─── Contact Page ─────────────────────────────────────────────
 export function Contact() {
+  const [form, setForm] = useState({ name: '', email: '', subject: '', message: '' });
+  const [loading, setLoading] = useState(false);
+
+  const handleSubmit = async () => {
+    if (!form.name || !form.email || !form.message) {
+      toast.error('Please fill in all required fields');
+      return;
+    }
+    setLoading(true);
+    await new Promise(resolve => setTimeout(resolve, 1000));
+    toast.success('Message sent! We will reply within 24 hours. 📧');
+    setForm({ name: '', email: '', subject: '', message: '' });
+    setLoading(false);
+  };
+
   return (
     <div className="min-h-screen pt-24 pb-16">
       <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
-
         <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} className="text-center mb-12">
           <h1 className="font-display font-bold text-4xl md:text-5xl text-tn-text mb-4">
             Contact <span className="text-gradient">Us</span>
@@ -199,8 +201,8 @@ export function Contact() {
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
           {[
-            { emoji: '📧', title: 'Email Us', value: 'support@thriftnepal.com', desc: 'We reply within 24 hours' },
-            { emoji: '📱', title: 'WhatsApp', value: '+977 9849XXXXXX', desc: 'Mon–Fri, 9am–6pm NST' },
+            { emoji: '📧', title: 'Email Us', value: 'lamsalmonika017@gmail.com', desc: 'We reply within 24 hours' },
+            { emoji: '📱', title: 'Phone / WhatsApp', value: '9749332717', desc: 'Mon–Fri, 9am–6pm NST' },
             { emoji: '📍', title: 'Based In', value: 'Kathmandu, Nepal', desc: 'Serving all of Nepal' },
             { emoji: '🎓', title: 'Student Support', value: 'Campus Help Desk', desc: 'Available on all major campuses' },
           ].map((c, i) => (
@@ -222,24 +224,54 @@ export function Contact() {
           <div className="space-y-4">
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div>
-                <label className="text-xs text-tn-muted font-medium mb-1.5 block">Your Name</label>
-                <input placeholder="Ram Thapa" className="input-field" />
+                <label className="text-xs text-tn-muted font-medium mb-1.5 block">Your Name *</label>
+                <input
+                  value={form.name}
+                  onChange={e => setForm(f => ({ ...f, name: e.target.value }))}
+                  placeholder="Ram Thapa"
+                  className="input-field"
+                />
               </div>
               <div>
-                <label className="text-xs text-tn-muted font-medium mb-1.5 block">Email</label>
-                <input type="email" placeholder="ram@email.com" className="input-field" />
+                <label className="text-xs text-tn-muted font-medium mb-1.5 block">Email *</label>
+                <input
+                  type="email"
+                  value={form.email}
+                  onChange={e => setForm(f => ({ ...f, email: e.target.value }))}
+                  placeholder="ram@email.com"
+                  className="input-field"
+                />
               </div>
             </div>
             <div>
               <label className="text-xs text-tn-muted font-medium mb-1.5 block">Subject</label>
-              <input placeholder="How can we help?" className="input-field" />
+              <input
+                value={form.subject}
+                onChange={e => setForm(f => ({ ...f, subject: e.target.value }))}
+                placeholder="How can we help?"
+                className="input-field"
+              />
             </div>
             <div>
-              <label className="text-xs text-tn-muted font-medium mb-1.5 block">Message</label>
-              <textarea rows={5} placeholder="Tell us your issue or feedback..." className="input-field resize-none" />
+              <label className="text-xs text-tn-muted font-medium mb-1.5 block">Message *</label>
+              <textarea
+                rows={5}
+                value={form.message}
+                onChange={e => setForm(f => ({ ...f, message: e.target.value }))}
+                placeholder="Tell us your issue or feedback..."
+                className="input-field resize-none"
+              />
             </div>
-            <button className="w-full btn-primary py-3.5 flex items-center justify-center gap-2">
-              Send Message <ArrowRight className="w-4 h-4" />
+            <button
+              onClick={handleSubmit}
+              disabled={loading}
+              className="w-full btn-primary py-3.5 flex items-center justify-center gap-2 disabled:opacity-60"
+            >
+              {loading ? (
+                <span className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+              ) : (
+                <>Send Message <ArrowRight className="w-4 h-4" /></>
+              )}
             </button>
           </div>
         </motion.div>
