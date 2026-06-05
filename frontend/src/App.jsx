@@ -14,6 +14,7 @@ import Cart from './pages/Cart';
 import Checkout from './pages/Checkout';
 import Sell from './pages/Sell';
 import { Profile, MyListings, Orders, Wishlist } from './pages/UserPages';
+import { About, HowItWorks, Contact } from './pages/StaticPages';
 import { AdminLayout, AdminOverview } from './admin/AdminLayout';
 import { AdminUsers, AdminProducts, AdminOrders, AdminPayments } from './admin/AdminPages';
 
@@ -52,6 +53,9 @@ function AppLayout() {
         <Route path="/my-listings" element={<ProtectedRoute><MyListings /></ProtectedRoute>} />
         <Route path="/orders" element={<ProtectedRoute><Orders /></ProtectedRoute>} />
         <Route path="/wishlist" element={<ProtectedRoute><Wishlist /></ProtectedRoute>} />
+        <Route path="/about" element={<About />} />
+        <Route path="/how-it-works" element={<HowItWorks />} />
+        <Route path="/contact" element={<Contact />} />
         <Route path="*" element={
           <div className="min-h-screen flex items-center justify-center text-center px-4">
             <div>
